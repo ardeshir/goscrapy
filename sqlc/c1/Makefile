@@ -1,5 +1,5 @@
 # database name
-DB_NAME ?= postgres
+DB_NAME ?= data
 
 # database type
 DB_TYPE ?= postgres
@@ -8,7 +8,7 @@ DB_TYPE ?= postgres
 DB_USER ?= postgres
 
 # database password
-DB_PWD ?= mysecretpassword
+DB_PWD ?= postgres
 
 # psql URL
 IP=127.0.0.1

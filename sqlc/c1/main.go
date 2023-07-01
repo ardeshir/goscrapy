@@ -3,7 +3,7 @@ package main
 import (
 	"context"
 	"database/sql"
-	chapter1 "fitness.dev/app/gen"
+	c1 "fitness.dev/app/gen"
 	"fmt"
 	_ "github.com/lib/pq"
 	"log"
@@ -12,10 +12,10 @@ import (
 func main() {
 	dbURI := fmt.Sprintf("postgres://%s:%s@%s:%d/%s?sslmode=disable",
 		GetAsString("DB_USER", "postgres"),
-		GetAsString("DB_PASSWORD", "mysecretpassword"),
+		GetAsString("DB_PASSWORD", "postgres"),
 		GetAsString("DB_HOST", "localhost"),
 		GetAsInt("DB_PORT", 5432),
-		GetAsString("DB_NAME", "postgres"),
+		GetAsString("DB_NAME", "data"),
 	)
 
 	// Open the database
@@ -34,7 +34,7 @@ func main() {
 
 	ctx := context.Background()
 
-	_, err = st.CreateUsers(ctx, chapter1.CreateUsersParams{
+	_, err = st.CreateUsers(ctx, c1.CreateUsersParams{
 		UserName:     "testuser",
 		PassWordHash: "hash",
 		Name:         "test",
@@ -50,7 +50,7 @@ func main() {
 		log.Fatalln("Error creating exercise :", err)
 	}
 
-	set, err := st.CreateSet(ctx, chapter1.CreateSetParams{
+	set, err := st.CreateSet(ctx, c1.CreateSetParams{
 		ExerciseID: eid,
 		Weight:     100,
 	})
@@ -59,7 +59,7 @@ func main() {
 		log.Fatalln("Error updating exercise :", err)
 	}
 
-	set, err = st.UpdateSet(ctx, chapter1.UpdateSetParams{
+	set, err = st.UpdateSet(ctx, c1.UpdateSetParams{
 		ExerciseID: eid,
 		SetID:      set.SetID,
 		Weight:     2000,
