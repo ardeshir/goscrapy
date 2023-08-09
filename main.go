@@ -1,53 +1,53 @@
 package main
 
 import (
-  "log"
-  "net/http"
-  "os"
+	"log"
+	"net/http"
+	"os"
 )
 
 func main() {
 
-  // create the variables for the response & error
-  var r *http.Response
-  var err error
+	// create the variables for the response & error
+	var r *http.Response
+	var err error
 
-  // Request index.html from ardeshir.io
-  r, err = http.Get("https://www.ardeshir.io/index.html")
+	var filename = "intro"
+	// Request index.html from ardeshir.io
+	r, err = http.Get("https://www.ardeshir.io/" + filename)
 
-  // if there is a problem accessing the server, kill the program and print the error to console
-    if err != nil {
-    panic(err) 
-    }
+	// if there is a problem accessing the server, kill the program and print the error to console
+	if err != nil {
+		panic(err)
+	}
 
-  // Check the status code returned by the server
-  if r.StatusCode == 200 {
-   // The request was successful! 
-   var page []byte
+	// Check the status code returned by the server
+	if r.StatusCode == 200 {
+		// The request was successful!
+		var page []byte
 
-   // we know the size of the respon is 1270
-   var bodyLen int = 2540
+		// we know the size of the respon is 1270
+		var bodyLen int = 16320 // 9180 // #16320
 
-   page = make([]byte, bodyLen)
+		page = make([]byte, bodyLen)
 
-  // read the data from server
-  r.Body.Read(page)
-   
-  // Open a writable file on your computer (create if it does not exits) 
-  var out *os.File 
+		// read the data from server
+		r.Body.Read(page)
 
-  out, err = os.OpenFile("index.html", os.O_CREATE|os.O_WRONLY, 0644)
-    if err != nil {
-      panic(err)
-    }
+		// Open a writable file on your computer (create if it does not exits)
+		var out *os.File
 
-  // write the content 
-  out.Write(page) 
-  out.Close()
+		out, err = os.OpenFile(filename, os.O_CREATE|os.O_WRONLY, 0644)
+		if err != nil {
+			panic(err)
+		}
 
-  } else {
-    log.Fatal("Failed to retrieve the web page. Recieved status code ", r.Status)
-  } 
-  
+		// write the content
+		out.Write(page)
+		out.Close()
+
+	} else {
+		log.Fatal("Failed to retrieve the web page. Recieved status code ", r.Status)
+	}
 
 } // end of main

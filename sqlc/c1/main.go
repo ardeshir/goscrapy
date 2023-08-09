@@ -30,7 +30,7 @@ func main() {
 	}
 
 	// Create the store
-	st := chapter1.New(db)
+	st := c1.New(db)
 
 	ctx := context.Background()
 
@@ -74,6 +74,6 @@ func main() {
 	u, err := st.ListUsers(ctx)
 
 	for _, usr := range u {
-		fmt.Println(fmt.Sprintf("Name : %s, ID : %d", usr.Name, usr.UserID))
+		fmt.Println(fmt.Sprintf("Users Name : %s, ID : %d", usr.Name, usr.UserID))
 	}
 }
